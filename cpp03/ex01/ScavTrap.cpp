@@ -1,62 +1,64 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ScavTrap.cpp                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lrocca <marvin@42.fr>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 14:02:56 by lrocca            #+#    #+#             */
-/*   Updated: 2021/11/24 14:42:01 by lrocca           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <iostream>
 #include "ScavTrap.hpp"
 
-#define HIT_POINTS		100
-#define ENERGY_POINTS	50
-#define ATTACK_DAMAGE	20
-
-ScavTrap::ScavTrap(): ClapTrap() {
-	_hitPoints = HIT_POINTS;
-	_energyPoints = ENERGY_POINTS;
-	_attackDamage = ATTACK_DAMAGE;
-	std::cout << "ScavTrap " << _name << " was born" << std::endl;
+ScavTrap::ScavTrap() : ClapTrap()
+{
+	this->set_name("anonymous");
+	this->set_hitPoints(100);
+	this->set_energyPoints(50);
+	this->set_attackDamage(20);
+	std::cout << "ScavTrap " << this->get_name() << " was born!" << std::endl;
+	return;
 }
 
-ScavTrap::ScavTrap(std::string name): ClapTrap(name) {
-	_hitPoints = HIT_POINTS;
-	_energyPoints = ENERGY_POINTS;
-	_attackDamage = ATTACK_DAMAGE;
-	std::cout << "ScavTrap " << _name << " was born" << std::endl;
+ScavTrap::ScavTrap(std::string name) : ClapTrap(name)
+{
+	this->set_name(name);
+	this->set_hitPoints(100);
+	this->set_energyPoints(50);
+	this->set_attackDamage(20);
+	std::cout << "ScavTrap " << name << " was born!" << std::endl;
+	return;
 }
 
-ScavTrap::ScavTrap(ScavTrap const &other): ClapTrap(other) {
-	std::cout << "ScavTrap " << _name << " was copied" << std::endl;
+ScavTrap::ScavTrap(ScavTrap const &other): ClapTrap(other)
+{
+	std::cout << "ScavTrap " << other << " was copied" << std::endl;
 }
 
-ScavTrap::~ScavTrap() {
-	std::cout << "ScavTrap " << _name << " was destroyed" << std::endl;
+ScavTrap::~ScavTrap()
+{
+	std::cout << "ScavTrap " << this->get_name() << " blasting off again!" << std::endl;
 }
 
-ScavTrap&	ScavTrap::operator=(ScavTrap const &other) {
-	std::cout	<< "ScavTrap " << _name << " is copied from " << other._name
-				<< std::endl;
+ScavTrap&	ScavTrap::operator=(ScavTrap const &other)
+{
+	std::cout << "ScavTrap " << this->get_name() << " is copied from " << other.get_name() << std::endl;
 
-	if (this != &other) {
-		_hitPoints = other._hitPoints;
-		_energyPoints = other._energyPoints;
-		_attackDamage = other._attackDamage;
+	if (this != &other)
+	{
+		this->set_hitPoints(other.get_hitPoints());
+		this->set_energyPoints(other.get_energyPoints());
+		this->set_attackDamage(other.get_attackDamage());
 	}
-
 	return *this;
 }
 
-void	ScavTrap::attack(std::string const &target) const {
-	std::cout	<< "ScavTrap " << _name << " attacks " << target << ", causing "
-				<< _attackDamage << " points of damage!" << std::endl;
+void	ScavTrap::attack(const std::string &target)
+{
+	if (this->get_energyPoints() > 0 && this->get_hitPoints() > 0)
+	{
+		std::cout << "ScavTrap " << this->get_name() << " attacks " << target << ", causing " << this->get_attackDamage() << " points of damage!" << std::endl;
+		this->set_energyPoints(this->get_energyPoints() - 1);
+	}
+	else if (this->get_energyPoints() <= 0)
+		std::cout << "ScavTrap " << this->get_name() << " can not attacks, he has no more energy points !" << std::endl;
+	else
+		std::cout << "ScavTrap " << this->get_name() << " can not attacks, he has no more hit points !" << std::endl;
+	return;
 }
 
-void	ScavTrap::guardGate(void) const {
-	std::cout << "ScavTrap " << _name << " is guarding the gate!" << std::endl;
+void	ScavTrap::guardGate(void)
+{
+	std::cout << "ScavTrap " << this->get_name() << " is in \"Gate keeper\" mode!" << std::endl;
 }

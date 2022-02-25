@@ -1,11 +1,13 @@
 #include "ClapTrap.hpp"
 
-int	main() {
-	ClapTrap	caio("Caio"), noia("Noia"), jojo(caio), def;
+int	main()
+{
+	ClapTrap	clapi("Clapi");
+	ClapTrap	clapo("Clapo");
 
-	caio = noia;
-
-	caio.attack("Ollo");
-	noia.takeDamage(100);
-	jojo.beRepaired(42);
+	clapi.attack("his enemy");
+	clapi.takeDamage(9);
+	clapi.attack("his enemy");
+	clapi.beRepaired(10);
+	clapi.attack("his enemy");
 }
